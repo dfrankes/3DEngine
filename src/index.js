@@ -1,5 +1,2 @@
-import Engine from 'Engine/Engine.js';
-
-let engine = new Engine();
-
-
+import Engine from './Engine/Engine';
+const engine = new Engine();
