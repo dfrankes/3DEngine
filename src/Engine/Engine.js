@@ -17,37 +17,40 @@ export default class Engine {
     sceneManager        = null;
     renderManager       = null;
 
-
     constructor(appName = '3DEngine'){
         this.appName = appName;
         this.uuid = uuid.v4();
 
         window.addEventListener('load', async() => {
-
             // Setup Engine container
             this.engineContainer = document.createElement('div');
             this.engineContainer.setAttribute('id', this.uuid)
             this.engineContainer.setAttribute('name', 'engineContainer');
             this.engineContainer.setAttribute('appName', appName);
+
+            // Development only, should be accessed using document.getElementById('ENGINE_UUID').engine
             window.engineInstance = this.uuid;
             
-            document.body.appendChild(this.engineContainer);
+            document.getElementById('container').appendChild(this.engineContainer);
 
-            // Bind instance of class to the dom element
+            // Bind our engine instance to the domElement
             this.engineContainer.engine = this;
 
-
-            // Create our renderManager
+            // Create our renderManager and sceneManager
             this.renderManager = new RenderManager(this.uuid);
             this.sceneManager = new SceneManager(this.uuid);
 
-
+            // Load our LoadingScene (this is the Developer Scene)
             await this.sceneManager.loadScene(LoadingScene);
-            console.log(this._paramters());
         });
     }
 
 
+    /**
+     * 
+     * @param {String} findObj 
+     * @returns Array of browser paramters or value of a specific param
+     */
     _paramters = (findObj = false) => {
         const searchQuery = window.location.search.substr(1);
         if(!searchQuery.length) return {};

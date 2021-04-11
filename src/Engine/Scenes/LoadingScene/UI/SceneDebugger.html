@@ -1,0 +1,28 @@
+<table class="table table-sm table-dark">
+    <tbody>
+        <tr>
+            <th scope="row">Scene</th>
+            <td>{{sceneName}}</td>
+        </tr>
+        <tr>
+            <th scope="row">Scene UUID</th>
+            <td>{{sceneUUID}}</td>
+        </tr>
+        <tr>
+            <th scope="row">Scene Children</th>
+            <td>
+                {{#if children}}
+                    {{children}} <a href="#" class="float-right" id="sceneChildren-info">+</a>
+                {{/if}}
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">Scene Camera</th>
+            <td>
+                {{#if sceneCamera}}
+                    {{sceneCamera}} <a href="#" class="float-right" id="sceneCamera-info">+</a>
+                {{/if}}
+            </td>
+        </tr>
+    </tbody>
+</table>

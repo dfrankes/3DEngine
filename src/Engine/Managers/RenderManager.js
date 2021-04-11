@@ -6,6 +6,10 @@ import * as THREE from 'three';
 export default class RenderManager {
     renderer = null;
 
+    /**
+     * RenderManager constructor
+     * @param {String} instanceUUID The engine instance UUID
+     */
     constructor(instanceUUID){
         this.renderer = new WebGLRenderer( { antialias: true } );
         this.renderer.setSize( window.innerWidth, window.innerHeight );
@@ -15,7 +19,11 @@ export default class RenderManager {
         engineInstance.appendChild( this.renderer.domElement );
     }
 
-
+    /**
+     * This is our main renderLoop
+     * This will be customized later so we can have fixedUpdate methods
+     * @param {int} time current tick
+     */
     renderLoop = (time) => {
         // Get active engine instance
         const engineInstance = document.getElementById(window.engineInstance).engine;
