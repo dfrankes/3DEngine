@@ -2,26 +2,25 @@ import Scene from '../Components/Scene';
 import {BoxGeometry, MeshNormalMaterial, Mesh, PerspectiveCamera} from 'three';
 import SceneDebugger from './LoadingScene/UI/SceneDebugger';
 
+
 export default class LoadingScene extends Scene {
 
     mainCamera = null;
+    debugPanel = null;
+    data = {};
+
     onStart = async() => {
     
+        // Create debug panel
+        this.debugPanel = new SceneDebugger({
+            sceneName: this.constructor.name,
+            sceneUUID: this.uuid,
+            children: this.children.length,
+            sceneCamera: this.mainCamera ? this.mainCamera.constructor.name : null
+        });
 
-        // Create Panel
-        let debugPanel = new SceneDebugger();
-        debugPanel.element.style.width = '450px';
-        this.uiManager.addElement(debugPanel);
-
-
-        setTimeout(() => {
-            debugPanel.update({
-                sceneName: this.constructor.name,
-                sceneUUID: this.uuid,
-                children: this.children.length,
-                sceneCamera: this.mainCamera ? this.mainCamera.constructor.name : null
-            }); 
-        }, 1000);
+        this.debugPanel.element.style.width = '450px';
+        this.uiManager.addElement(this.debugPanel);
 
         // Create main camera
         this.mainCamera = new PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 10 );
@@ -34,11 +33,18 @@ export default class LoadingScene extends Scene {
         material = new MeshNormalMaterial();
     
         mesh = new Mesh( geometry, material );
-        mesh.onUpdate = (time) => {
-            this.rotation.x = time / 2000;
-            this.rotation.y = time / 1000;
+        mesh.onFixedUpdate = () => {
+            this.rotation.x +=  0.01;
+            this.rotation.y +=  0.01;
         }
-        
         this.add( mesh );
+    }
+
+    onUpdate = () => {
+
+    }
+    
+    onFixedUpdate = (time) => {
+
     }
 }
