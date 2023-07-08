@@ -14,6 +14,5 @@ export default class Scene extends TreeScene {
     _onVisibilityChange = () => {
         // Hide any UIManger that is attached to this scene
         const elements = document.querySelectorAll(`[scene="${this.uuid}"]`);
-        console.log(elements);
     }
 }

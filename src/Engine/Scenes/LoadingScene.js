@@ -1,7 +1,5 @@
 import Scene from '../Components/Scene';
 import {BoxGeometry, MeshNormalMaterial, Mesh, PerspectiveCamera} from 'three';
-import SceneDebugger from './LoadingScene/UI/SceneDebugger';
-
 
 export default class LoadingScene extends Scene {
 
@@ -11,16 +9,18 @@ export default class LoadingScene extends Scene {
 
     onStart = async() => {
     
-        // Create debug panel
-        this.debugPanel = new SceneDebugger({
-            sceneName: this.constructor.name,
-            sceneUUID: this.uuid,
-            children: this.children.length,
-            sceneCamera: this.mainCamera ? this.mainCamera.constructor.name : null
-        });
+        // Create debugPanel variables
+        this.debugPanel = {
+            sceneName: new ReactiveVar(this.constructor.name),
+            sceneUUID: new ReactiveVar(this.uuid),
+            children: new ReactiveVar(this.children.length),
+            sceneCamera: this.mainCamera ? new ReactiveVar(this.mainCamera.constructor.name) : new ReactiveVar(null),
+            currentTick: new ReactiveVar()
+        }
 
-        this.debugPanel.element.style.width = '450px';
-        this.uiManager.addElement(this.debugPanel);
+        // Require blaze template and add to our uiManager
+        require('./LoadingScene/UI/sceneDebugger');
+        this.uiManager.addElement(Template.sceneDebugger, this.debugPanel);
 
         // Create main camera
         this.mainCamera = new PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 10 );
@@ -40,11 +40,11 @@ export default class LoadingScene extends Scene {
         this.add( mesh );
     }
 
-    onUpdate = () => {
-
+    onUpdate = ({time}) => {
+        
     }
     
-    onFixedUpdate = (time) => {
-
+    onFixedUpdate = ({time}) => {
+        // this.debugPanel.currentTick.set(time);
     }
 }

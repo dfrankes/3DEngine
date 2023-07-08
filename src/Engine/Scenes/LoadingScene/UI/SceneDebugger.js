@@ -1,20 +1,21 @@
-import UIElement from "Engine/Components/UIElement";
-const source = require('./SceneDebugger.html');
+require("./sceneDebugger.bhtml");
+const { Meteor } = require("meteor-blaze-common");
 
-export default class SceneDebugger extends UIElement {
-    constructor(data) {
-        super(source, data);
-    }
+Template.sceneDebugger.onCreated(function onCreated() {
 
-    helpers = {
-        MyHelper: () => {
-            return "Hello World";
-        }
-    }
+});
 
-    events = {
-        'click .test': (event) => {
-            
-        }
-    }
-}
+Template.sceneDebugger.helpers({
+  'sceneName': function(){
+    return Template.instance().data.sceneName.get();
+  },
+  'sceneUUID': () => {
+    return Template.instance().data.sceneUUID.get();
+  },
+  'sceneUUID': () => {
+    return Template.instance().data.sceneUUID.get();
+  },
+  'currentTick': () => {
+    return Template.instance().data.currentTick.get();
+  }
+});

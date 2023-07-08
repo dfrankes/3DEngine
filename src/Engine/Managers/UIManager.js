@@ -44,9 +44,12 @@ export default class UI {
      * @param {UIElement} UIElement 
      * @param {*} options 
      */
-    addElement = (UIElement, options = {}) => {
+    addElement = (UIElement, data = {}) => {
         this.elements.push(UIElement);
-        this.uiContainer.appendChild(UIElement.element);
+
+        // Render blaze template
+        Blaze.renderWithData(UIElement, data, this.uiContainer);
+        // this.uiContainer.appendChild(UIElement.element);
     }
 
     /**

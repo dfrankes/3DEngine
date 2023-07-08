@@ -33,10 +33,10 @@ export default class UIElement {
         this._renderTemplate(source);
     }
 
-    // /**
-    //  * Updates the template with new data
-    //  * @param {Object} data new data
-    //  */
+    /**
+     * Updates the template with new data
+     * @param {Object} data new data
+     */
     update = (data = {}) => {
         const template = Handlebars.compile(this.source);
         const _htmlRender = template(data);
